@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Effects System Demo | Modern Animation Library</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+  <style>
+    :root {
+      --primary-color: #4f46e5;
+      --primary-dark: #4338ca;
+      --secondary-color: #06b6d4;
+      --text-color: #1f2937;
+      --text-light: #6b7280;
+      --bg-color: #ffffff;
+      --bg-alt: #f9fafb;
+      --border-color: #e5e7eb;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      color: var(--text-color);
+      background: var(--bg-color);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    header {
+      background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+      color: white;
+      padding: 60px 0 40px;
+      margin-bottom: 40px;
+    }
+
+    header h1 {
+      font-size: 3rem;
+      margin-bottom: 16px;
+    }
+
+    header p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+      max-width: 600px;
+    }
+
+    nav {
+      background: white;
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .nav-container {
+      display: flex;
+      overflow-x: auto;
+      white-space: nowrap;
+      padding: 10px 0;
+      scrollbar-width: none;
+    }
+
+    .nav-container::-webkit-scrollbar {
+      display: none;
+    }
+
+    .nav-item {
+      padding: 8px 16px;
+      margin-right: 8px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: 500;
+      color: var(--text-light);
+      transition: all 0.2s ease;
+    }
+
+    .nav-item:hover, .nav-item.active {
+      background: var(--primary-color);
+      color: white;
+    }
+
+    .section {
+      margin-bottom: 60px;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      margin-bottom: 24px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--border-color);
+    }
+
+    .demo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+
+    .demo-card {
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .demo-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .demo-content {
+      padding: 20px;
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-alt);
+      position: relative;
+    }
+
+    .demo-info {
+      padding: 16px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .demo-info h3 {
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .demo-info p {
+      color: var(--text-light);
+      font-size: 0.9rem;
+      margin-bottom: 12px;
+    }
+
+    .code-snippet {
+      background: #282c34;
+      color: #abb2bf;
+      padding: 12px;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 0.85rem;
+      overflow-x: auto;
+      margin-bottom: 12px;
+    }
+
+    .demo-controls {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    button {
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: background 0.2s;
+    }
+
+    button:hover {
+      background: var(--primary-dark);
+    }
+
+    button.secondary {
+      background: transparent;
+      color: var(--primary-color);
+      border: 1px solid var(--primary-color);
+      margin-right: 8px;
+    }
+
+    button.secondary:hover {
+      background: rgba(79, 70, 229, 0.1);
+    }
+
+    .demo-item {
+      font-size: 1.2rem;
+      padding: 10px 20px;
+      background: white;
+      border-radius: 4px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      max-width: 100%;
+    }
+
+    .text-demo {
+      font-size: 1.5rem;
+      font-weight: 600;
+      line-height: 1.4;
+    }
+
+    .svg-demo {
+      width: 100%;
+      height: 150px;
+      stroke: var(--primary-color);
+      stroke-width: 2;
+      fill: none;
+    }
+
+    footer {
+      background: var(--bg-alt);
+      padding: 40px 0;
+      text-align: center;
+      margin-top: 60px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    footer p {
+      color: var(--text-light);
+      margin-bottom: 10px;
+    }
+
+    footer a {
+      color: var(--primary-color);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 2.2rem;
+      }
+
+      .demo-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Special effect styles */
+    .card-3d {
+      background: linear-gradient(45deg, #e66465, #9198e5);
+      color: white;
+      width: 200px;
+      height: 150px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+
+    .floating-box {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: white;
+      width: 150px;
+      height: 150px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+
+    .gradient-text {
+      font-size: 2rem;
+      font-weight: bold;
+    }
+
+    .ripple-button {
+      background: var(--primary-color);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 500;
+      position: relative;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1 data-effect="slideRight, duration=0.7s">Effects System Demo</h1>
+      <p data-effect="slideUp, delay=0.3s">A lightweight, high-performance animation library for web applications. Explore all available effects below.</p>
+    </div>
+  </header>
+
+  <nav>
+    <div class="container">
+      <div class="nav-container">
+        <div class="nav-item active" onclick="scrollToSection('basic-effects')">Basic Effects</div>
+        <div class="nav-item" onclick="scrollToSection('text-effects')">Text Effects</div>
+        <div class="nav-item" onclick="scrollToSection('svg-effects')">SVG Effects</div>
+        <div class="nav-item" onclick="scrollToSection('interactive-effects')">Interactive Effects</div>
+        <div class="nav-item" onclick="scrollToSection('advanced-effects')">Advanced Effects</div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container">
+    <section id="basic-effects" class="section">
+      <h2 class="section-title" data-effect="slideUp">Basic Effects</h2>
+      <div class="demo-grid">
+        <!-- Fade In -->
+        <div class="demo-card">
+          <div class="demo-content">
+            <div class="demo-item" id="fadeIn-demo" data-effect="fadeIn, duration=1s">Fade In Effect</div>
+          </div>
+          <div class="demo-info">
+            <h3>fadeIn <span style="color: var(--text-light); font-size: 0.8rem;">Simple</span></h3>
+            <p>Simple fade in animation with configurable duration and delay.</p>
+            <div class="code-snippet">
+              &lt;div data-effect="fadeIn, duration=1s"&gt;Content...&lt;/div&gt;
+            </div>
+            <div class="demo-controls">
+              <button class="secondary" onclick="Effects.reset(document.getElementById('fadeIn-demo'))">Reset</button>
+              <button onclick="Effects.play(document.getElementById('fadeIn-demo'))">Play</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide Up -->
+        <div class="demo-card">
+          <div class="demo-content">
+            <div class="demo-item" id="slideUp-demo" data-effect="slideUp, duration=0.8s">Slide Up Motion</div>
+          </div>
+          <div class="demo-info">
+            <h3>slideUp <span style="color: var(--text-light); font-size: 0.8rem;">Simple</span></h3>
+            <p>Element slides up from below with fade in effect.</p>
+            <div class="code-snippet">
+              &lt;div data-effect="slideUp, duration=0.8s"&gt;Content...&lt;/div&gt;
+            </div>
+            <div class="demo-controls">
+              <button class="secondary" onclick="Effects.reset(document.getElementById('slideUp-demo'))">Reset</button>
+              <button onclick="Effects.play(document.getElementById('slideUp-demo'))">Play</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide Down -->
+        <div class="demo-card">
+          <div class="demo-content">
+            <div class="demo-item" id="slideDown-demo" data-effect="slideDown, duration=0.8s">Slide Down Motion</div>
+          </div>
+          <div class="demo-info">
+            <h3>slideDown <span style="color: var(--text-light); font-size: 0.8rem;">Simple</span></h3>
+            <p>Element slides down from above with fade in effect.</p>
+            <div class="code-snippet">
+              &lt;div data-effect="slideDown, duration=0.8s"&gt;Content...&lt;/div&gt;
+            </div>
+            <div class="demo-controls">
+              <button class="secondary" onclick="Effects.reset(document.getElementById('slideDown-demo'))">Reset</button>
+              <button onclick="Effects.play(document.getElementById('slideDown-demo'))">Play</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide Left -->
+        <div class="demo-card">
+          <div class="demo-content">
+            <div class="demo-item" id="slideLeft-demo" data-effect="slideLeft, duration=0.8s">Slide Left Motion</div>
+          </div>
+          <div class="demo-info">
+            <h3>slideLeft <span style="color: var(--text-light); font-size: 0.8rem;">Simple</span></h3>
+            <p>Element slides in from the left side.</p>
+            <div class="code-snippet">
+              &lt;div data-effect="slideLeft, duration=0.8s"&gt;Content...&lt;/div&gt;
+            </div>
+            <div class="demo-controls">
+              <button class="secondary" onclick="Effects.reset(document.getElementById('slideLeft-demo'))">Reset</button>
+              <button onclick="Effects.play(document.getElementById('slideLeft-demo'))">Play</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide Right -->
+        <div class="demo-card">
+          <div class="demo-content">
+            <div class="demo-item" id="slideRight-demo" data-effect="slideRight, duration=0.8s">Slide Right Motion</div>
+          </div>
+          <div class="demo-info">
+            <h3>slideRight <span style="color: var(--text-light); font-size: 0.8rem;">Simple</span></h3>
+            <p>Element slides in from the right side.</p>
+            <div class="code-snippet">
+              &lt;div data-effect="slideRight, duration=0.8s"&gt;Content...&lt;/div&gt;
+            </div>
+            <div class="demo-controls">
+              <button class="secondary" onclick="Effects.reset(document.getElementById('slideRight-demo'))">Reset</button>
+              <button onclick="Effects.play(document.getElementById('slideRight-demo'))">Play</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scale Up -->
+        <div class="demo-card">
+          <div class="demo-content">
+            <div class="demo-item" id="scaleUp-demo" data-effect="scaleUp, duration=0.8s">Scale Up Effect</div>
+          </div>
+          <div class="demo-info">
+            <h3>scaleUp <span style="color: var(--text-light); font-size: 0.8rem;">Simple</span></h3>
+            <p>Element scales up from smaller size with fade in.</p>
+            <div class="code-snippet">
+              &lt;div data-effect="scaleUp, duration=0.8s"&gt;Content...&lt;/div&gt;
+            </div>
+            <div class="demo-controls">
+              <button class="secondary" onclick="Effects.reset(document.getElementById('scaleUp-demo'))">Reset</button>
+              <button onclick="Effects.play(document.getElementById('scaleUp-demo'))">Play</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Zoom In -->
+        <div class="demo-card">
+          <div class="demo-content">
+            <div class="demo-item" id="zoomIn-demo" data-effect="zoomIn, duration=0.8s">Zoom In Effect</div>
+          </div>
+          <div class="demo-info">
+            <h3>zoomIn <span style="color: var(--text-light); font-size: 0.8rem;">Simple</span></h3>
+            <p>Element zooms in from very small size.</p>
+            <div class="code-snippet">
+              &lt;div data-effect="zoomIn, duration=0.8s"&gt;Content...&lt;/div&gt;
+            </div>
+            <div class="demo-controls">
+              <button class="secondary" onclick="Effects.reset(document.getElementById('zoomIn-demo'))">Reset</button>
+              <button onclick="Effects.play(document.getElementById('zoomIn-demo'))">Play</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Blur In -->
+        <div class="demo-card">
+          <div class="demo-content">
+            <div class="demo-item" id="blurIn-demo" data-effect="blurIn, duration=1.2s">Blur In Effect</div>
+          </div>
+          <div class="demo-info">
+            <h3>blurIn <span style="color: var(--text-light); font-size: 0.8rem;">Simple</span></h3>
+            <p>Element fades in with blur to clear transition.</p>
+            <div class="code-snippet">
+              &lt;div data-effect="blurIn, duration=1.2s"&gt;Content...&lt;/div&gt;
+            </div>
+            <div class="demo-controls">
+              <button class="secondary" onclick="Effects.reset(document.getElementById('blurIn-demo'))">Reset</button>
+              <button onclick="Effects.play(document.getElementById('blurIn-demo'))">Play</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Rotate In -->
+        <div class="demo-card">
+          <div class="demo-content">
+            <div class="demo-item" id="rotateIn-demo" data-effect="rotateIn, duration=1s">Rotate In Effect</div>
+          </div>
+          <div class="demo-info">
+            <h3>rotateIn <span style="color: var(--text-light); font-size: 0.8rem;">Simple</span></h3>
+            <p>Element rotates into view from -90 degrees.</p>
+            <div class="code-snippet">
+              &lt;div data-effect="rotateIn, duration=1s"&gt;Content...&lt;/div&gt;
+            </div>
+            <div class="demo-controls">
+              <button class="secondary" onclick="Effects.reset(document.getElementById('rotateIn-demo'))">Reset</button>
+              <button onclick="Effects.play(document.getElementById('rotateIn-demo'))">Play</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="text-effects" class="section">
+      <h2 class="section-title" data-effect="slideUp">Text Effects</h2>
+      <div class="demo-grid">
+        <!-- Text Type -->
+        <div class="demo-card">
+          <div class="demo-content">
+            <div class="text-demo" id="textType-demo" data-effect="textType, duration=2s">Typing effect reveals text character by character</div>
+          </div>
+          <div class="demo-info">
+            <h3>textType <span style="color: var(--text-light); font-size: 0.8rem;">RAF</span></h3>
+            <p>Types text character by character like a typewriter.</p>
+            <div class="code-snippet">
+              &lt;div data-effect="textType, duration=2s"&gt;Text content...&lt;/div&gt;
+            </div>
+            <div class="demo-controls">
+              <button class="secondary" onclick="Effects.reset(document.getElementById('textType-demo'))">Reset</button>
+              <button onclick="Effects.play(document.getElementById('textType-demo'))">Play</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide Up Words -->
+        <div class="demo-card">
+          <div class="demo-content">
+            <div class="text-demo" id="slideUpWords-demo" data-effect="slideUpWords, duration=1.8s">Words slide up smoothly into view</div>
+          </div>
+          <div class="demo-info">
+            <h3>slideUpWords <span style="color: var(--text-light); font-size: 0.8rem;">RAF</span></h3>
+            <p>Smooth word-by-word reveal with enhanced easing and momentum.</p>
+            <div class="code-snippet">
+              &lt;div data-effect="slideUpWords, duration=1.8s"&gt;Text content...&lt;/div&gt;
+            </div>
+            <div class="demo-controls">
+              <button class="secondary" onclick="Effects.reset(document.getElementById('slideUpWords-demo'))">Reset</button>
+              <button onclick="Effects.play(document.getElementById('slideUpWords-demo'))">Play</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide Up Letters -->
+        <div class="demo-card">
+          <div class="demo-content">
+            <div class="text-demo" id="slideUpLetters-demo" data-effect="slideUpLetters, duration=2.2s">Letters appear with silky smooth motion</div>
+          </div>
+          <div class="demo-info">
+            <h3>slideUpLetters <span style="color: var(--text-light); font-size: 0.8rem;">RAF</span></h3>
+            <p>Ultra-smooth letter-by-letter animation with layered easing and wave motion.</p>
+            <div class="code-snippet">
+              &lt;div data-effect="slideUpLetters, duration=2.2s"&gt;Text content...&lt;/div&gt;
+            </div>
+            <div class="demo-controls">
+              <button class="secondary" onclick="Effects.reset(document.getElementById('slideUpLetters-demo'))">Reset</button>
+              <button onclick="Effects.play(document.getElementById('slideUpLetters-demo'))">Play</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Text Glitch -->
+        <div class="demo-card">
+          <div class="demo-content">
+            <div class="text-demo" id="textGlitch-demo" data-effect="textGlitch, duration=2s">Glitchy Text Effect</div>
+          </div>
+          <div class="demo-info">
+            <h3>textGlitch <span style="color: var(--text-light); font-size: 0.8rem;">RAF</span></h3>
+            <p>Text appears with digital glitch effect and random characters.</p>
+            <div class="code-snippet">
+              &lt;div data-effect="textGlitch, duration=2s"&gt;Text content...&lt;/div&gt;
+            </div>
+            <div class="demo-controls">
+              <button class="secondary" onclick="Effects.reset(document.getElementById('textGlitch-demo'))">Reset</button>
+              <button onclick="Effects.play(document.getElementById('textGlitch-demo'))">Play</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Gradient Text -->
+        <div class="demo-card">
+          <div class="demo-content">
+            <div class="text-demo gradient-text" id="gradientText-demo" data-effect="gradientText, duration=1.5s" data-gradient-color1="#ff8a00" data-gradient-color2="#e52e71" data-gradient-color3="#0066ff">Animated Gradient</div>
+          </div>
+          <div class="demo-info">
+            <h3>gradientText <span style="color: var(--text-light); font-size: 0.8rem;">Simple</span></h3>
+            <p>Text with animated gradient background colors.</p>
+            <div class="code-snippet">
+              &lt;div data-effect="gradientText, duration=1.5s" 
+                  data-gradient-color1="#ff8a00"&gt;Text...&lt;/div&gt;
+            </div>
+            <div class="demo-controls">
+              <button class="secondary" onclick="Effects.reset(document.getElementById('gradientText-demo'))">Reset</button>
+              <button onclick="Effects.play(document.getElementById('gradientText-demo'))">Play</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Split Lines -->
+        <div class="demo-card">
+          <div class="demo-content">
+            <div class="text-demo" id="splitLines-demo" data-effect="splitLines, duration=1.8s">This text will be split into multiple lines and animated with staggered timing for each line</div>
+          </div>
+          <div class="demo-info">
+            <h3>splitLines <span style="color: var(--text-light); font-size: 0.8rem;">RAF</span></h3>
+            <p>Text is automatically split into lines with staggered animation.</p>
+            <div class="code-snippet">
+              &lt;div data-effect="splitLines, duration=1.8s"&gt;Text content...&lt;/div&gt;
+            </div>
+            <div class="demo-controls">
+              <button class="secondary" onclick="Effects.reset(document.getElementById('splitLines-demo'))">Reset</button>
+              <button onclick="Effects.play(document.getElementById('splitLines-demo'))">Play</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Text Wave -->
+        <div class="demo-card">
+          <div class="demo-content">
+            <div class="text-demo" id="textWave-demo" data-effect="textWave, duration=2s">Wave Motion Text</div>
+          </div>
+          <div class="demo-info">
+            <h3>textWave <span style="color: var(--text-light); font-size: 0.8rem;">RAF</span></h3>
+            <p>Letters appear in a wave motion pattern.</p>
+            <div class="code-snippet">
+              &lt;div data-effect="textWave, duration=2s"&gt;Text content...&lt;/div&gt;
+            </div>
+            <div class="demo-controls">
+              <button class="secondary" onclick="Effects.reset(document.getElementById('textWave-demo'))">Reset</button>
+              <button onclick="Effects.play(document.getElementById('textWave-demo'))">Play</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Text Blur Reveal -->
+        <div class="demo-card">
+          <div class="demo-content">
+            <div class="text-demo" id="textBlurReveal-demo" data-effect="textBlurReveal, duration=2s">Blur to Clear Text</div>
+          </div>
+          <div class="demo-info">
+            <h3>textBlurReveal <span style="color: var(--text-light); font-size: 0.8rem;">RAF</span></h3>
+            <p>Text appears from blur with staggered word timing.</p>
+            <div class="code-snippet">
+              &lt;div data-effect="textBlurReveal, duration=2s"&gt;Text content...&lt;/div&gt;
+            </div>
+            <div class="demo-controls">
+              <button class="secondary" onclick="Effects.reset(document.getElementById('textBlurReveal-demo'))">Reset</button>
+              <button onclick="Effects.play(document.getElementById('textBlurReveal-demo'))">Play</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Text Matrix -->
+        <div class="demo-card">
+          <div class="demo-content">
+            <div class="text-demo" id="textMatrix-demo" data-effect="textMatrix, duration=2.5s">Matrix Code Effect</div>
+          </div>
+          <div class="demo-info">
+            <h3>textMatrix <span style="color: var(--text-light); font-size: 0.8rem;">RAF</span></h3>
+            <p>Matrix-style character reveal with green effect.</p>
+            <div class="code-snippet">
+              &lt;div data-effect="textMatrix, duration=2.5s"&gt;Text content...&lt;/div&gt;
+            </div>
+            <div class="demo-controls">
+              <button class="secondary" onclick="Effects.reset(document.getElementById('textMatrix-demo'))">Reset</button>
+              <button onclick="Effects.play(document.getElementById('textMatrix-demo'))">Play</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Text Flip -->
+        <div class="demo-card">
+          <div class="demo-content">
+            <div class="text-demo" id="textFlip-demo" data-effect="textFlip, duration=1.8s">3D Flip Text Effect</div>
+          </div>
+          <div class="demo-info">
+            <h3>textFlip <span style="color: var(--text-light); font-size: 0.8rem;">RAF</span></h3>
+            <p>Words flip into view with 3D rotation effect.</p>
+            <div class="code-snippet">
+              &lt;div data-effect="textFlip, duration=1.8s"&gt;Text content...&lt;/div&gt;
+            </div>
+            <div class="demo-controls">
+              <button class="secondary" onclick="Effects.reset(document.getElementById('textFlip-demo'))">Reset</button>
+              <button onclick="Effects.play(document.getElementById('textFlip-demo'))">Play</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Text Scale -->
+        <div class="demo-card">
+          <div class="demo-content">
+            <div class="text-demo" id="textScale-demo" data-effect="textScale, duration=2s">Elastic Scale Text</div>
+          </div>
+          <div class="demo-info">
+            <h3>textScale <span style="color: var(--text-light); font-size: 0.8rem;">RAF</span></h3>
+            <p>Letters scale up from tiny to normal with elastic bounce.</p>
+            <div class="code-snippet">
+              &lt;div data-effect="textScale, duration=2s"&gt;Text content...&lt;/div&gt;
+            </div>
+            <div class="demo-controls">
+              <button class="secondary" onclick="Effects.reset(document.getElementById('textScale-demo'))">Reset</button>
+              <button onclick="Effects.play(document.getElementById('textScale-demo'))">Play</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Text Rainbow -->
+        <div class="demo-card">
+          <div class="demo-content">
+            <div class="text-demo" id="textRainbow-demo" data-effect="textRainbow, duration=1.8s">Rainbow Colored Text</div>
+          </div>
+          <div class="demo-info">
+            <h3>textRainbow <span style="color: var(--text-light); font-size: 0.8rem;">RAF</span></h3>
+            <p>Letters appear with cycling rainbow colors and slide up motion.</p>
+            <div class="code-snippet">
+              &lt;div data-effect="textRainbow, duration=1.8s"&gt;Text content...&lt;/div&gt;
+            </div>
+            <div class="demo-controls">
+              <button class="secondary" onclick="Effects.reset(document.getElementById('textRainbow-demo'))">Reset</button>
+              <button onclick="Effects.play(document.getElementById('textRainbow-demo'))">Play</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Text Slide -->
+        <div class="demo-card">
+          <div class="demo-content">
+            <div class="text-demo" id="textSlide-demo" data-effect="textSlide, duration=1.5s">Words slide from alternating sides</div>
+          </div>
+          <div class="demo-info">
+            <h3>textSlide <span style="color: var(--text-light); font-size: 0.8rem;">RAF</span></h3>
+            <p>Words slide in from alternating left and right directions.</p>
+            <div class="code-snippet">
+              &lt;div data-effect="textSlide, duration=1.5s"&gt;Text content...&lt;/div&gt;
+            </div>
+            <div class="demo-controls">
+              <button class="secondary" onclick="Effects.reset(document.getElementById('textSlide-demo'))">Reset</button>
+              <button onclick="Effects.play(document.getElementById('textSlide-demo'))">Play</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Text Neon -->
+        <div class="demo-card">
+          <div class="demo-content">
+            <div class="text-demo" id="textNeon-demo" data-effect="textNeon, duration=2s" data-neon-color="#00ffff">Neon Glow Effect</div>
+          </div>
+          <div class="demo-info">
+            <h3>textNeon <span style="color: var(--text-light); font-size: 0.8rem;">RAF</span></h3>
+            <p>Text appears with animated neon glow effect.</p>
+            <div class="code-snippet">
+              &lt;div data-effect="textNeon, duration=2s" data-neon-color="#00ffff"&gt;Text content...&lt;/div&gt;
+            </div>
+            <div class="demo-controls">
+              <button class="secondary" onclick="Effects.reset(document.getElementById('textNeon-demo'))">Reset</button>
+              <button onclick="Effects.play(document.getElementById('textNeon-demo'))">Play</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Text Spiral -->
+        <div class="demo-card">
+          <div class="demo-content">
+            <div class="text-demo" id="textSpiral-demo" data-effect="textSpiral, duration=2s">Spiral Text Motion</div>
+          </div>
+          <div class="demo-info">
+            <h3>textSpiral <span style="color: var(--text-light); font-size: 0.8rem;">RAF</span></h3>
+            <p>Letters spiral into their final position with elastic bounce.</p>
+            <div class="code-snippet">
+              &lt;div data-effect="textSpiral, duration=2s"&gt;Text content...&lt;/div&gt;
+            </div>
+            <div class="demo-controls">
+              <button class="secondary" onclick="Effects.reset(document.getElementById('textSpiral-demo'))">Reset</button>
+              <button onclick="Effects.play(document.getElementById('textSpiral-demo'))">Play</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Text Shatter -->
+        <div class="demo-card">
+          <div class="demo-content">
+            <div class="text-demo" id="textShatter-demo" data-effect="textShatter, duration=1.8s">Shattering Text Effect</div>
+          </div>
+          <div class="demo-info">
+            <h3>textShatter <span style="color: var(--text-light); font-size: 0.8rem;">RAF</span></h3>
+            <p>Letters shatter into view from random scattered positions.</p>
+            <div class="code-snippet">
+              &lt;div data-effect="textShatter, duration=1.8s"&gt;Text content...&lt;/div&gt;
+            </div>
+            <div class="demo-controls">
+              <button class="secondary" onclick="Effects.reset(document.getElementById('textShatter-demo'))">Reset</button>
+              <button onclick="Effects.play(document.getElementById('textShatter-demo'))">Play</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Text Pulse -->
+        <div class="demo-card">
+          <div class="demo-content">
+            <div class="text-demo" id="textPulse-demo" data-effect="textPulse, duration=2s">Heartbeat Pulse Text</div>
+          </div>
+          <div class="demo-info">
+            <h3>textPulse <span style="color: var(--text-light); font-size: 0.8rem;">RAF</span></h3>
+            <p>Letters pulse into view with heartbeat-like rhythm.</p>
+            <div class="code-snippet">
+              &lt;div data-effect="textPulse, duration=2s"&gt;Text content...&lt;/div&gt;
+            </div>
+            <div class="demo-controls">
+              <button class="secondary" onclick="Effects.reset(document.getElementById('textPulse-demo'))">Reset</button>
+              <button onclick="Effects.play(document.getElementById('textPulse-demo'))">Play</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Text Morph Characters -->
+        <div class="demo-card">
+          <div class="demo-content">
+            <div class="text-demo" id="textMorphChars-demo" data-effect="textMorphChars, duration=2.5s">Morphing Characters</div>
+          </div>
+          <div class="demo-info">
+            <h3>textMorphChars <span style="color: var(--text-light); font-size: 0.8rem;">RAF</span></h3>
+            <p>Characters morph from random symbols to final text.</p>
+            <div class="code-snippet">
+              &lt;div data-effect="textMorphChars, duration=2.5s"&gt;Text content...&lt;/div&gt;
+            </div>
+            <div class="demo-controls">
+              <button class="secondary" onclick="Effects.reset(document.getElementById('textMorphChars-demo'))">Reset</button>
+              <button onclick="Effects.play(document.getElementById('textMorphChars-demo'))">Play</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Text Drop In -->
+        <div class="demo-card">
+          <div class="demo-content">
+            <div class="text-demo" id="textDropIn-demo" data-effect="textDropIn, duration=1.5s">Dropping Letters Effect</div>
+          </div>
+          <div class="demo-info">
+            <h3>textDropIn <span style="color: var(--text-light); font-size: 0.8rem;">RAF</span></h3>
+            <p>Letters drop in from above with bouncy gravity effect.</p>
+            <div class="code-snippet">
+              &lt;div data-effect="textDropIn, duration=1.5s"&gt;Text content...&lt;/div&gt;
+            </div>
+            <div class="demo-controls">
+              <button class="secondary" onclick="Effects.reset(document.getElementById('textDropIn-demo'))">Reset</button>
+              <button onclick="Effects.play(document.getElementById('textDropIn-demo'))">Play</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Text Zoom Rotate -->
+        <div class="demo-card">
+          <div class="demo-content">
+            <div class="text-demo" id="textZoomRotate-demo" data-effect="textZoomRotate, duration=1.8s">Zoom Rotate Text</div>
+          </div>
+          <div class="demo-info">
+            <h3>textZoomRotate <span style="color: var(--text-light); font-size: 0.8rem;">RAF</span></h3>
+            <p>Letters zoom in while rotating from alternating directions.</p>
+            <div class="code-snippet">
+              &lt;div data-effect="textZoomRotate, duration=1.8s"&gt;Text content...&lt;/div&gt;
+            </div>
+            <div class="demo-controls">
+              <button class="secondary" onclick="Effects.reset(document.getElementById('textZoomRotate-demo'))">Reset</button>
+              <button onclick="Effects.play(document.getElementById('textZoomRotate-demo'))">Play</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Text Slow Reveal -->
+        <div class="demo-card">
+          <div class="demo-content">
+            <div class="text-demo" id="textSlowReveal-demo" data-effect="textSlowReveal, duration=3s">Dramatic Slow Reveal</div>
+          </div>
+          <div class="demo-info">
+            <h3>textSlowReveal <span style="color: var(--text-light); font-size: 0.8rem;">RAF</span></h3>
+            <p>Very slow, dramatic character reveal with scale and blur.</p>
+            <div class="code-snippet">
+              &lt;div data-effect="textSlowReveal, duration=3s"&gt;Text content...&lt;/div&gt;
+            </div>
+            <div class="demo-controls">
+              <button class="secondary" onclick="Effects.reset(document.getElementById('textSlowReveal-demo'))">Reset</button>
+              <button onclick="Effects.play(document.getElementById('textSlowReveal-demo'))">Play</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Text Blur Appear -->
+        <div class="demo-card">
+          <div class="demo-content">
+            <div class="text-demo" id="textBlurAppear-demo" data-effect="textBlurAppear, duration=2s">Smooth Blur to Clear</div>
+          </div>
+          <div class="demo-info">
+            <h3>textBlurAppear <span style="color: var(--text-light); font-size: 0.8rem;">RAF</span></h3>
+            <p>Text appears with smooth blur to clear transition per letter.</p>
+            <div class="code-snippet">
+              &lt;div data-effect="textBlurAppear, duration=2s"&gt;Text content...&lt;/div&gt;
+            </div>
+            <div class="demo-controls">
+              <button class="secondary" onclick="Effects.reset(document.getElementById('textBlurAppear-demo'))">Reset</button>
+              <button onclick="Effects.play(document.getElementById('textBlurAppear-demo'))">Play</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="svg-effects" class="section">
+      <h2 class="section-title" data-effect="slideUp">SVG Effects</h2>
+      <div class="demo-grid">
+        <!-- SVG Draw -->
+        <div class="demo-card">
+          <div class="demo-content">
+            <svg class="svg-demo" id="svgDraw-demo" data-effect="svgDraw, duration=3s" viewBox="0 0 200 100">
+              <path d="M10,50 Q50,10 100,50 T190,50" fill="none" stroke-width="3"/>
+              <circle cx="50" cy="30" r="8" fill="none" stroke-width="2"/>
+              <rect x="120" y="20" width="30" height="20" fill="none" stroke-width="2"/>
+            </svg>
+          </div>
+          <div class="demo-info">
+            <h3>svgDraw <span style="color: var(--text-light); font-size: 0.8rem;">Simple</span></h3>
+            <p>Progressively draws SVG paths, circles, and shapes.</p>
+            <div class="code-snippet">
+              &lt;svg data-effect="svgDraw, duration=3s"&gt;
+                &lt;path d="..." /&gt;
+              &lt;/svg&gt;
+            </div>
+            <div class="demo-controls">
+              <button class="secondary" onclick="Effects.reset(document.getElementById('svgDraw-demo'))">Reset</button>
+              <button onclick="Effects.play(document.getElementById('svgDraw-demo'))">Play</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="interactive-effects" class="section">
+      <h2 class="section-title" data-effect="slideUp">Interactive Effects</h2>
+      <div class="demo-grid">
+        <!-- 3D Tilt Card -->
+        <div class="demo-card">
+          <div class="demo-content">
+            <div class="card-3d" id="tiltCard-demo" data-effect="tiltCard, duration=1s" data-tilt-amount="15">3D Tilt Card<br><small>Hover to tilt!</small></div>
+          </div>
+          <div class="demo-info">
+            <h3>tiltCard <span style="color: var(--text-light); font-size: 0.8rem;">Interactive</span></h3>
+            <p>Card tilts in 3D based on mouse position when hovered.</p>
+            <div class="code-snippet">
+              &lt;div data-effect="tiltCard, duration=1s" 
+                  data-tilt-amount="15"&gt;Content...&lt;/div&gt;
+            </div>
+            <div class="demo-controls">
+              <button class="secondary" onclick="Effects.reset(document.getElementById('tiltCard-demo'))">Reset</button>
+              <button onclick="Effects.play(document.getElementById('tiltCard-demo'))">Play</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ripple Effect -->
+        <div class="demo-card">
+          <div class="demo-content">
+            <div class="ripple-button" id="ripple-demo" data-effect="ripple, duration=1.5s">Ripple Effect</div>
+          </div>
+          <div class="demo-info">
+            <h3>ripple <span style="color: var(--text-light); font-size: 0.8rem;">RAF</span></h3>
+            <p>Creates a ripple wave effect emanating from the center.</p>
+            <div class="code-snippet">
+              &lt;div data-effect="ripple, duration=1.5s"&gt;Content...&lt;/div&gt;
+            </div>
+            <div class="demo-controls">
+              <button class="secondary" onclick="Effects.reset(document.getElementById('ripple-demo'))">Reset</button>
+              <button onclick="Effects.play(document.getElementById('ripple-demo'))">Play</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="advanced-effects" class="section">
+      <h2 class="section-title" data-effect="slideUp">Advanced Effects</h2>
+      <div class="demo-grid">
+        <!-- 3D Flip -->
+        <div class="demo-card">
+          <div class="demo-content">
+            <div class="demo-item" id="flip3D-demo" data-effect="flip3D, duration=1.2s">3D Flip Effect</div>
+          </div>
+          <div class="demo-info">
+            <h3>flip3D <span style="color: var(--text-light); font-size: 0.8rem;">Simple</span></h3>
+            <p>3D flip animation with perspective and preserve-3d.</p>
+            <div class="code-snippet">
+              &lt;div data-effect="flip3D, duration=1.2s"&gt;Content...&lt;/div&gt;
+            </div>
+            <div class="demo-controls">
+              <button class="secondary" onclick="Effects.reset(document.getElementById('flip3D-demo'))">Reset</button>
+              <button onclick="Effects.play(document.getElementById('flip3D-demo'))">Play</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bounce -->
+        <div class="demo-card">
+          <div class="demo-content">
+            <div class="demo-item" id="bounce-demo" data-effect="bounce, duration=1s">Bouncy Entrance</div>
+          </div>
+          <div class="demo-info">
+            <h3>bounce <span style="color: var(--text-light); font-size: 0.8rem;">Simple</span></h3>
+            <p>Bouncy entrance animation with overshoot easing.</p>
+            <div class="code-snippet">
+              &lt;div data-effect="bounce, duration=1s"&gt;Content...&lt;/div&gt;
+            </div>
+            <div class="demo-controls">
+              <button class="secondary" onclick="Effects.reset(document.getElementById('bounce-demo'))">Reset</button>
+              <button onclick="Effects.play(document.getElementById('bounce-demo'))">Play</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Shake -->
+        <div class="demo-card">
+          <div class="demo-content">
+            <div class="demo-item" id="shake-demo" data-effect="shake, duration=1s">Shake Animation</div>
+          </div>
+          <div class="demo-info">
+            <h3>shake <span style="color: var(--text-light); font-size: 0.8rem;">RAF</span></h3>
+            <p>Horizontal shake/vibration effect with fade in.</p>
+            <div class="code-snippet">
+              &lt;div data-effect="shake, duration=1s"&gt;Content...&lt;/div&gt;
+            </div>
+            <div class="demo-controls">
+              <button class="secondary" onclick="Effects.reset(document.getElementById('shake-demo'))">Reset</button>
+              <button onclick="Effects.play(document.getElementById('shake-demo'))">Play</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Floating -->
+        <div class="demo-card">
+          <div class="demo-content">
+            <div class="floating-box" id="floating-demo" data-effect="floating, duration=1s" data-float-amount="8px" data-float-duration="2.5s">Floating Element</div>
+          </div>
+          <div class="demo-info">
+            <h3>floating <span style="color: var(--text-light); font-size: 0.8rem;">Simple</span></h3>
+            <p>Continuous subtle floating animation after entrance.</p>
+            <div class="code-snippet">
+              &lt;div data-effect="floating, duration=1s" 
+                  data-float-amount="8px"&gt;Content...&lt;/div&gt;
+            </div>
+            <div class="demo-controls">
+              <button class="secondary" onclick="Effects.reset(document.getElementById('floating-demo'))">Reset</button>
+              <button onclick="Effects.play(document.getElementById('floating-demo'))">Play</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stagger Children -->
+        <div class="demo-card">
+          <div class="demo-content">
+            <div id="staggerChildren-demo" data-effect="staggerChildren, duration=1.5s" data-child-selector=".stagger-item">
+              <div class="stagger-item" style="padding: 5px; margin: 2px; background: rgba(79, 70, 229, 0.1); border-radius: 4px;">Item 1</div>
+              <div class="stagger-item" style="padding: 5px; margin: 2px; background: rgba(79, 70, 229, 0.1); border-radius: 4px;">Item 2</div>
+              <div class="stagger-item" style="padding: 5px; margin: 2px; background: rgba(79, 70, 229, 0.1); border-radius: 4px;">Item 3</div>
+              <div class="stagger-item" style="padding: 5px; margin: 2px; background: rgba(79, 70, 229, 0.1); border-radius: 4px;">Item 4</div>
+            </div>
+          </div>
+          <div class="demo-info">
+            <h3>staggerChildren <span style="color: var(--text-light); font-size: 0.8rem;">RAF</span></h3>
+            <p>Staggered animation of child elements with customizable selectors.</p>
+            <div class="code-snippet">
+              &lt;div data-effect="staggerChildren, duration=1.5s" 
+                  data-child-selector=".item"&gt;...&lt;/div&gt;
+            </div>
+            <div class="demo-controls">
+              <button class="secondary" onclick="Effects.reset(document.getElementById('staggerChildren-demo'))">Reset</button>
+              <button onclick="Effects.play(document.getElementById('staggerChildren-demo'))">Play</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Reveal -->
+        <div class="demo-card">
+          <div class="demo-content">
+            <div class="demo-item" id="reveal-demo" data-effect="reveal, duration=1.2s" data-direction="left">Directional Reveal</div>
+          </div>
+          <div class="demo-info">
+            <h3>reveal <span style="color: var(--text-light); font-size: 0.8rem;">Simple</span></h3>
+            <p>Directional reveal using clip-path (left, right, top, bottom).</p>
+            <div class="code-snippet">
+              &lt;div data-effect="reveal, duration=1.2s" 
+                  data-direction="left"&gt;Content...&lt;/div&gt;
+            </div>
+            <div class="demo-controls">
+              <button class="secondary" onclick="Effects.reset(document.getElementById('reveal-demo'))">Reset</button>
+              <button onclick="Effects.play(document.getElementById('reveal-demo'))">Play</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Morph In -->
+        <div class="demo-card">
+          <div class="demo-content">
+            <div class="demo-item" id="morphIn-demo" data-effect="morphIn, duration=1.5s">Morph Transition</div>
+          </div>
+          <div class="demo-info">
+            <h3>morphIn <span style="color: var(--text-light); font-size: 0.8rem;">Simple</span></h3>
+            <p>Smooth morphing transition with scale, rotation, and blur.</p>
+            <div class="code-snippet">
+              &lt;div data-effect="morphIn, duration=1.5s"&gt;Content...&lt;/div&gt;
+            </div>
+            <div class="demo-controls">
+              <button class="secondary" onclick="Effects.reset(document.getElementById('morphIn-demo'))">Reset</button>
+              <button onclick="Effects.play(document.getElementById('morphIn-demo'))">Play</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Liquid Fade -->
+        <div class="demo-card">
+          <div class="demo-content">
+            <div class="demo-item" id="liquidFade-demo" data-effect="liquidFade, duration=1.8s">Liquid Fade</div>
+          </div>
+          <div class="demo-info">
+            <h3>liquidFade <span style="color: var(--text-light); font-size: 0.8rem;">RAF</span></h3>
+            <p>Liquid-like fade with subtle wave motion and blur.</p>
+            <div class="code-snippet">
+              &lt;div data-effect="liquidFade, duration=1.8s"&gt;Content...&lt;/div&gt;
+            </div>
+            <div class="demo-controls">
+              <button class="secondary" onclick="Effects.reset(document.getElementById('liquidFade-demo'))">Reset</button>
+              <button onclick="Effects.play(document.getElementById('liquidFade-demo'))">Play</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Breathe -->
+        <div class="demo-card">
+          <div class="demo-content">
+            <div class="demo-item" id="breathe-demo" data-effect="breathe, duration=1s">Breathing Animation</div>
+          </div>
+          <div class="demo-info">
+            <h3>breathe <span style="color: var(--text-light); font-size: 0.8rem;">Simple</span></h3>
+            <p>Gentle breathing scale animation that continues after entrance.</p>
+            <div class="code-snippet">
+              &lt;div data-effect="breathe, duration=1s"&gt;Content...&lt;/div&gt;
+            </div>
+            <div class="demo-controls">
+              <button class="secondary" onclick="Effects.reset(document.getElementById('breathe-demo'))">Reset</button>
+              <button onclick="Effects.play(document.getElementById('breathe-demo'))">Play</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Smooth Bounce -->
+        <div class="demo-card">
+          <div class="demo-content">
+            <div class="demo-item" id="smoothBounce-demo" data-effect="smoothBounce, duration=1.5s">Smooth Bounce</div>
+          </div>
+          <div class="demo-info">
+            <h3>smoothBounce <span style="color: var(--text-light); font-size: 0.8rem;">RAF</span></h3>
+            <p>Ultra-smooth bounce animation with custom easing curves.</p>
+            <div class="code-snippet">
+              &lt;div data-effect="smoothBounce, duration=1.5s"&gt;Content...&lt;/div&gt;
+            </div>
+            <div class="demo-controls">
+              <button class="secondary" onclick="Effects.reset(document.getElementById('smoothBounce-demo'))">Reset</button>
+              <button onclick="Effects.play(document.getElementById('smoothBounce-demo'))">Play</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Elastic Slide -->
+        <div class="demo-card">
+          <div class="demo-content">
+            <div class="demo-item" id="elasticSlide-demo" data-effect="elasticSlide, duration=1.5s" data-slide-direction="left">Elastic Slide</div>
+          </div>
+          <div class="demo-info">
+            <h3>elasticSlide <span style="color: var(--text-light); font-size: 0.8rem;">RAF</span></h3>
+            <p>Elastic slide with smooth overshoot in any direction.</p>
+            <div class="code-snippet">
+              &lt;div data-effect="elasticSlide, duration=1.5s" 
+                  data-slide-direction="left"&gt;Content...&lt;/div&gt;
+            </div>
+            <div class="demo-controls">
+              <button class="secondary" onclick="Effects.reset(document.getElementById('elasticSlide-demo'))">Reset</button>
+              <button onclick="Effects.play(document.getElementById('elasticSlide-demo'))">Play</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Smooth Reveal -->
+        <div class="demo-card">
+          <div class="demo-content">
+            <div class="demo-item" id="smoothReveal-demo" data-effect="smoothReveal, duration=1.8s">Smooth Reveal</div>
+          </div>
+          <div class="demo-info">
+            <h3>smoothReveal <span style="color: var(--text-light); font-size: 0.8rem;">RAF</span></h3>
+            <p>Smooth circular reveal with clip-path and scale animation.</p>
+            <div class="code-snippet">
+              &lt;div data-effect="smoothReveal, duration=1.8s"&gt;Content...&lt;/div&gt;
+            </div>
+            <div class="demo-controls">
+              <button class="secondary" onclick="Effects.reset(document.getElementById('smoothReveal-demo'))">Reset</button>
+              <button onclick="Effects.play(document.getElementById('smoothReveal-demo'))">Play</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Glow In -->
+        <div class="demo-card">
+          <div class="demo-content">
+            <div class="demo-item" id="glowIn-demo" data-effect="glowIn, duration=1.5s">Glow Effect</div>
+          </div>
+          <div class="demo-info">
+            <h3>glowIn <span style="color: var(--text-light); font-size: 0.8rem;">Simple</span></h3>
+            <p>Element fades in with a glowing drop-shadow effect.</p>
+            <div class="code-snippet">
+              &lt;div data-effect="glowIn, duration=1.5s"&gt;Content...&lt;/div&gt;
+            </div>
+            <div class="demo-controls">
+              <button class="secondary" onclick="Effects.reset(document.getElementById('glowIn-demo'))">Reset</button>
+              <button onclick="Effects.play(document.getElementById('glowIn-demo'))">Play</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Unfold -->
+        <div class="demo-card">
+          <div class="demo-content">
+            <div class="demo-item" id="unfold-demo" data-effect="unfold, duration=1.2s">Unfold Animation</div>
+          </div>
+          <div class="demo-info">
+            <h3>unfold <span style="color: var(--text-light); font-size: 0.8rem;">Simple</span></h3>
+            <p>Paper-like unfolding animation with 3D perspective.</p>
+            <div class="code-snippet">
+              &lt;div data-effect="unfold, duration=1.2s"&gt;Content...&lt;/div&gt;
+            </div>
+            <div class="demo-controls">
+              <button class="secondary" onclick="Effects.reset(document.getElementById('unfold-demo'))">Reset</button>
+              <button onclick="Effects.play(document.getElementById('unfold-demo'))">Play</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="replay-all" class="section" style="text-align: center; padding: 40px 0;">
+      <h2 data-effect="fadeIn">Want to see all animations again?</h2>
+      <p style="margin-bottom: 20px;" data-effect="fadeIn, delay=0.2s">Click the button below to reset and replay all animations on this page.</p>
+      <button style="padding: 12px 24px; font-size: 1.1rem;" onclick="Effects.replayAll()">Replay All Animations</button>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>Effects System Demo - A lightweight animation library for web applications</p>
+      <p>Created by <a href="https://nichind.dev">nichind</a> | <a href="https://github.com/nichind/effects">GitHub Repository</a></p>
+    </div>
+  </footer>
+
+  <script src="/effects.js"></script>
+  <script>
+    // Initialize effects system
+    document.addEventListener('DOMContentLoaded', function() {
+      // Set up navigation
+      function scrollToSection(sectionId) {
+        const section = document.getElementById(sectionId);
+        if (section) {
+          window.scrollTo({
+            top: section.offsetTop - 70,
+            behavior: 'smooth'
+          });
+          
+          // Update active nav item
+          document.querySelectorAll('.nav-item').forEach(item => {
+            item.classList.remove('active');
+          });
+          
+          event.target.classList.add('active');
+        }
+      }
+      
+      // Make scrollToSection available globally
+      window.scrollToSection = scrollToSection;
+      
+      // Handle navigation highlight on scroll
+      window.addEventListener('scroll', function() {
+        const sections = ['basic-effects', 'text-effects', 'svg-effects', 'interactive-effects', 'advanced-effects'];
+        let currentSection = '';
+        
+        for (let i = 0; i < sections.length; i++) {
+          const sectionId = sections[i];
+          const section = document.getElementById(sectionId);
+          if (section.offsetTop - 100 <= window.scrollY) {
+            currentSection = sections[i];
+          }
+        }
+        
+        if (currentSection) {
+          document.querySelectorAll('.nav-item').forEach(item => {
+            item.classList.remove('active');
+          });
+          
+          const activeNav = document.querySelector(`[onclick="scrollToSection('${currentSection}')"]`);
+          if (activeNav) {
+            activeNav.classList.add('active');
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>
