@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Effects System Demo | Modern Animation Library</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+  <script src="https://cdn.jsdelivr.net/gh/nichind/effects/effects.js"></script>
   <style>
     :root {
       --primary-color: #4f46e5;
@@ -88,7 +90,8 @@
       transition: all 0.2s ease;
     }
 
-    .nav-item:hover, .nav-item.active {
+    .nav-item:hover,
+    .nav-item.active {
       background: var(--primary-color);
       color: white;
     }
@@ -291,11 +294,13 @@
     }
   </style>
 </head>
+
 <body>
   <header>
     <div class="container">
       <h1 data-effect="slideRight, duration=0.7s">Effects System Demo</h1>
-      <p data-effect="slideUp, delay=0.3s">A lightweight, high-performance animation library for web applications. Explore all available effects below.</p>
+      <p data-effect="slideUp, delay=0.3s">A lightweight, high-performance animation library for web applications.
+        Explore all available effects below.</p>
     </div>
   </header>A
 
@@ -363,7 +368,8 @@
               &lt;div data-effect="slideDown, duration=0.8s"&gt;Content...&lt;/div&gt;
             </div>
             <div class="demo-controls">
-              <button class="secondary" onclick="Effects.reset(document.getElementById('slideDown-demo'))">Reset</button>
+              <button class="secondary"
+                onclick="Effects.reset(document.getElementById('slideDown-demo'))">Reset</button>
               <button onclick="Effects.play(document.getElementById('slideDown-demo'))">Play</button>
             </div>
           </div>
@@ -381,7 +387,8 @@
               &lt;div data-effect="slideLeft, duration=0.8s"&gt;Content...&lt;/div&gt;
             </div>
             <div class="demo-controls">
-              <button class="secondary" onclick="Effects.reset(document.getElementById('slideLeft-demo'))">Reset</button>
+              <button class="secondary"
+                onclick="Effects.reset(document.getElementById('slideLeft-demo'))">Reset</button>
               <button onclick="Effects.play(document.getElementById('slideLeft-demo'))">Play</button>
             </div>
           </div>
@@ -399,7 +406,8 @@
               &lt;div data-effect="slideRight, duration=0.8s"&gt;Content...&lt;/div&gt;
             </div>
             <div class="demo-controls">
-              <button class="secondary" onclick="Effects.reset(document.getElementById('slideRight-demo'))">Reset</button>
+              <button class="secondary"
+                onclick="Effects.reset(document.getElementById('slideRight-demo'))">Reset</button>
               <button onclick="Effects.play(document.getElementById('slideRight-demo'))">Play</button>
             </div>
           </div>
@@ -485,7 +493,8 @@
         <!-- Text Type -->
         <div class="demo-card">
           <div class="demo-content">
-            <div class="text-demo" id="textType-demo" data-effect="textType, duration=2s">Typing effect reveals text character by character</div>
+            <div class="text-demo" id="textType-demo" data-effect="textType, duration=2s">Typing effect reveals text
+              character by character</div>
           </div>
           <div class="demo-info">
             <h3>textType <span style="color: var(--text-light); font-size: 0.8rem;">RAF</span></h3>
@@ -503,7 +512,8 @@
         <!-- Slide Up Words -->
         <div class="demo-card">
           <div class="demo-content">
-            <div class="text-demo" id="slideUpWords-demo" data-effect="slideUpWords, duration=1.8s">Words slide up smoothly into view</div>
+            <div class="text-demo" id="slideUpWords-demo" data-effect="slideUpWords, duration=1.8s">Words slide up
+              smoothly into view</div>
           </div>
           <div class="demo-info">
             <h3>slideUpWords <span style="color: var(--text-light); font-size: 0.8rem;">RAF</span></h3>
@@ -512,7 +522,8 @@
               &lt;div data-effect="slideUpWords, duration=1.8s"&gt;Text content...&lt;/div&gt;
             </div>
             <div class="demo-controls">
-              <button class="secondary" onclick="Effects.reset(document.getElementById('slideUpWords-demo'))">Reset</button>
+              <button class="secondary"
+                onclick="Effects.reset(document.getElementById('slideUpWords-demo'))">Reset</button>
               <button onclick="Effects.play(document.getElementById('slideUpWords-demo'))">Play</button>
             </div>
           </div>
@@ -521,7 +532,8 @@
         <!-- Slide Up Letters -->
         <div class="demo-card">
           <div class="demo-content">
-            <div class="text-demo" id="slideUpLetters-demo" data-effect="slideUpLetters, duration=2.2s">Letters appear with silky smooth motion</div>
+            <div class="text-demo" id="slideUpLetters-demo" data-effect="slideUpLetters, duration=2.2s">Letters appear
+              with silky smooth motion</div>
           </div>
           <div class="demo-info">
             <h3>slideUpLetters <span style="color: var(--text-light); font-size: 0.8rem;">RAF</span></h3>
@@ -530,7 +542,8 @@
               &lt;div data-effect="slideUpLetters, duration=2.2s"&gt;Text content...&lt;/div&gt;
             </div>
             <div class="demo-controls">
-              <button class="secondary" onclick="Effects.reset(document.getElementById('slideUpLetters-demo'))">Reset</button>
+              <button class="secondary"
+                onclick="Effects.reset(document.getElementById('slideUpLetters-demo'))">Reset</button>
               <button onclick="Effects.play(document.getElementById('slideUpLetters-demo'))">Play</button>
             </div>
           </div>
@@ -548,7 +561,8 @@
               &lt;div data-effect="textGlitch, duration=2s"&gt;Text content...&lt;/div&gt;
             </div>
             <div class="demo-controls">
-              <button class="secondary" onclick="Effects.reset(document.getElementById('textGlitch-demo'))">Reset</button>
+              <button class="secondary"
+                onclick="Effects.reset(document.getElementById('textGlitch-demo'))">Reset</button>
               <button onclick="Effects.play(document.getElementById('textGlitch-demo'))">Play</button>
             </div>
           </div>
@@ -557,17 +571,20 @@
         <!-- Gradient Text -->
         <div class="demo-card">
           <div class="demo-content">
-            <div class="text-demo gradient-text" id="gradientText-demo" data-effect="gradientText, duration=1.5s" data-gradient-color1="#ff8a00" data-gradient-color2="#e52e71" data-gradient-color3="#0066ff">Animated Gradient</div>
+            <div class="text-demo gradient-text" id="gradientText-demo" data-effect="gradientText, duration=1.5s"
+              data-gradient-color1="#ff8a00" data-gradient-color2="#e52e71" data-gradient-color3="#0066ff">Animated
+              Gradient</div>
           </div>
           <div class="demo-info">
             <h3>gradientText <span style="color: var(--text-light); font-size: 0.8rem;">Simple</span></h3>
             <p>Text with animated gradient background colors.</p>
             <div class="code-snippet">
-              &lt;div data-effect="gradientText, duration=1.5s" 
-                  data-gradient-color1="#ff8a00"&gt;Text...&lt;/div&gt;
+              &lt;div data-effect="gradientText, duration=1.5s"
+              data-gradient-color1="#ff8a00"&gt;Text...&lt;/div&gt;
             </div>
             <div class="demo-controls">
-              <button class="secondary" onclick="Effects.reset(document.getElementById('gradientText-demo'))">Reset</button>
+              <button class="secondary"
+                onclick="Effects.reset(document.getElementById('gradientText-demo'))">Reset</button>
               <button onclick="Effects.play(document.getElementById('gradientText-demo'))">Play</button>
             </div>
           </div>
@@ -576,7 +593,8 @@
         <!-- Split Lines -->
         <div class="demo-card">
           <div class="demo-content">
-            <div class="text-demo" id="splitLines-demo" data-effect="splitLines, duration=1.8s">This text will be split into multiple lines and animated with staggered timing for each line</div>
+            <div class="text-demo" id="splitLines-demo" data-effect="splitLines, duration=1.8s">This text will be split
+              into multiple lines and animated with staggered timing for each line</div>
           </div>
           <div class="demo-info">
             <h3>splitLines <span style="color: var(--text-light); font-size: 0.8rem;">RAF</span></h3>
@@ -585,7 +603,8 @@
               &lt;div data-effect="splitLines, duration=1.8s"&gt;Text content...&lt;/div&gt;
             </div>
             <div class="demo-controls">
-              <button class="secondary" onclick="Effects.reset(document.getElementById('splitLines-demo'))">Reset</button>
+              <button class="secondary"
+                onclick="Effects.reset(document.getElementById('splitLines-demo'))">Reset</button>
               <button onclick="Effects.play(document.getElementById('splitLines-demo'))">Play</button>
             </div>
           </div>
@@ -612,7 +631,8 @@
         <!-- Text Blur Reveal -->
         <div class="demo-card">
           <div class="demo-content">
-            <div class="text-demo" id="textBlurReveal-demo" data-effect="textBlurReveal, duration=2s">Blur to Clear Text</div>
+            <div class="text-demo" id="textBlurReveal-demo" data-effect="textBlurReveal, duration=2s">Blur to Clear Text
+            </div>
           </div>
           <div class="demo-info">
             <h3>textBlurReveal <span style="color: var(--text-light); font-size: 0.8rem;">RAF</span></h3>
@@ -621,7 +641,8 @@
               &lt;div data-effect="textBlurReveal, duration=2s"&gt;Text content...&lt;/div&gt;
             </div>
             <div class="demo-controls">
-              <button class="secondary" onclick="Effects.reset(document.getElementById('textBlurReveal-demo'))">Reset</button>
+              <button class="secondary"
+                onclick="Effects.reset(document.getElementById('textBlurReveal-demo'))">Reset</button>
               <button onclick="Effects.play(document.getElementById('textBlurReveal-demo'))">Play</button>
             </div>
           </div>
@@ -639,7 +660,8 @@
               &lt;div data-effect="textMatrix, duration=2.5s"&gt;Text content...&lt;/div&gt;
             </div>
             <div class="demo-controls">
-              <button class="secondary" onclick="Effects.reset(document.getElementById('textMatrix-demo'))">Reset</button>
+              <button class="secondary"
+                onclick="Effects.reset(document.getElementById('textMatrix-demo'))">Reset</button>
               <button onclick="Effects.play(document.getElementById('textMatrix-demo'))">Play</button>
             </div>
           </div>
@@ -675,7 +697,8 @@
               &lt;div data-effect="textScale, duration=2s"&gt;Text content...&lt;/div&gt;
             </div>
             <div class="demo-controls">
-              <button class="secondary" onclick="Effects.reset(document.getElementById('textScale-demo'))">Reset</button>
+              <button class="secondary"
+                onclick="Effects.reset(document.getElementById('textScale-demo'))">Reset</button>
               <button onclick="Effects.play(document.getElementById('textScale-demo'))">Play</button>
             </div>
           </div>
@@ -684,7 +707,8 @@
         <!-- Text Rainbow -->
         <div class="demo-card">
           <div class="demo-content">
-            <div class="text-demo" id="textRainbow-demo" data-effect="textRainbow, duration=1.8s">Rainbow Colored Text</div>
+            <div class="text-demo" id="textRainbow-demo" data-effect="textRainbow, duration=1.8s">Rainbow Colored Text
+            </div>
           </div>
           <div class="demo-info">
             <h3>textRainbow <span style="color: var(--text-light); font-size: 0.8rem;">RAF</span></h3>
@@ -693,7 +717,8 @@
               &lt;div data-effect="textRainbow, duration=1.8s"&gt;Text content...&lt;/div&gt;
             </div>
             <div class="demo-controls">
-              <button class="secondary" onclick="Effects.reset(document.getElementById('textRainbow-demo'))">Reset</button>
+              <button class="secondary"
+                onclick="Effects.reset(document.getElementById('textRainbow-demo'))">Reset</button>
               <button onclick="Effects.play(document.getElementById('textRainbow-demo'))">Play</button>
             </div>
           </div>
@@ -702,7 +727,8 @@
         <!-- Text Slide -->
         <div class="demo-card">
           <div class="demo-content">
-            <div class="text-demo" id="textSlide-demo" data-effect="textSlide, duration=1.5s">Words slide from alternating sides</div>
+            <div class="text-demo" id="textSlide-demo" data-effect="textSlide, duration=1.5s">Words slide from
+              alternating sides</div>
           </div>
           <div class="demo-info">
             <h3>textSlide <span style="color: var(--text-light); font-size: 0.8rem;">RAF</span></h3>
@@ -711,7 +737,8 @@
               &lt;div data-effect="textSlide, duration=1.5s"&gt;Text content...&lt;/div&gt;
             </div>
             <div class="demo-controls">
-              <button class="secondary" onclick="Effects.reset(document.getElementById('textSlide-demo'))">Reset</button>
+              <button class="secondary"
+                onclick="Effects.reset(document.getElementById('textSlide-demo'))">Reset</button>
               <button onclick="Effects.play(document.getElementById('textSlide-demo'))">Play</button>
             </div>
           </div>
@@ -720,7 +747,8 @@
         <!-- Text Neon -->
         <div class="demo-card">
           <div class="demo-content">
-            <div class="text-demo" id="textNeon-demo" data-effect="textNeon, duration=2s" data-neon-color="#00ffff">Neon Glow Effect</div>
+            <div class="text-demo" id="textNeon-demo" data-effect="textNeon, duration=2s" data-neon-color="#00ffff">Neon
+              Glow Effect</div>
           </div>
           <div class="demo-info">
             <h3>textNeon <span style="color: var(--text-light); font-size: 0.8rem;">RAF</span></h3>
@@ -747,7 +775,8 @@
               &lt;div data-effect="textSpiral, duration=2s"&gt;Text content...&lt;/div&gt;
             </div>
             <div class="demo-controls">
-              <button class="secondary" onclick="Effects.reset(document.getElementById('textSpiral-demo'))">Reset</button>
+              <button class="secondary"
+                onclick="Effects.reset(document.getElementById('textSpiral-demo'))">Reset</button>
               <button onclick="Effects.play(document.getElementById('textSpiral-demo'))">Play</button>
             </div>
           </div>
@@ -756,7 +785,8 @@
         <!-- Text Shatter -->
         <div class="demo-card">
           <div class="demo-content">
-            <div class="text-demo" id="textShatter-demo" data-effect="textShatter, duration=1.8s">Shattering Text Effect</div>
+            <div class="text-demo" id="textShatter-demo" data-effect="textShatter, duration=1.8s">Shattering Text Effect
+            </div>
           </div>
           <div class="demo-info">
             <h3>textShatter <span style="color: var(--text-light); font-size: 0.8rem;">RAF</span></h3>
@@ -765,7 +795,8 @@
               &lt;div data-effect="textShatter, duration=1.8s"&gt;Text content...&lt;/div&gt;
             </div>
             <div class="demo-controls">
-              <button class="secondary" onclick="Effects.reset(document.getElementById('textShatter-demo'))">Reset</button>
+              <button class="secondary"
+                onclick="Effects.reset(document.getElementById('textShatter-demo'))">Reset</button>
               <button onclick="Effects.play(document.getElementById('textShatter-demo'))">Play</button>
             </div>
           </div>
@@ -783,7 +814,8 @@
               &lt;div data-effect="textPulse, duration=2s"&gt;Text content...&lt;/div&gt;
             </div>
             <div class="demo-controls">
-              <button class="secondary" onclick="Effects.reset(document.getElementById('textPulse-demo'))">Reset</button>
+              <button class="secondary"
+                onclick="Effects.reset(document.getElementById('textPulse-demo'))">Reset</button>
               <button onclick="Effects.play(document.getElementById('textPulse-demo'))">Play</button>
             </div>
           </div>
@@ -792,7 +824,8 @@
         <!-- Text Morph Characters -->
         <div class="demo-card">
           <div class="demo-content">
-            <div class="text-demo" id="textMorphChars-demo" data-effect="textMorphChars, duration=2.5s">Morphing Characters</div>
+            <div class="text-demo" id="textMorphChars-demo" data-effect="textMorphChars, duration=2.5s">Morphing
+              Characters</div>
           </div>
           <div class="demo-info">
             <h3>textMorphChars <span style="color: var(--text-light); font-size: 0.8rem;">RAF</span></h3>
@@ -801,7 +834,8 @@
               &lt;div data-effect="textMorphChars, duration=2.5s"&gt;Text content...&lt;/div&gt;
             </div>
             <div class="demo-controls">
-              <button class="secondary" onclick="Effects.reset(document.getElementById('textMorphChars-demo'))">Reset</button>
+              <button class="secondary"
+                onclick="Effects.reset(document.getElementById('textMorphChars-demo'))">Reset</button>
               <button onclick="Effects.play(document.getElementById('textMorphChars-demo'))">Play</button>
             </div>
           </div>
@@ -810,7 +844,8 @@
         <!-- Text Drop In -->
         <div class="demo-card">
           <div class="demo-content">
-            <div class="text-demo" id="textDropIn-demo" data-effect="textDropIn, duration=1.5s">Dropping Letters Effect</div>
+            <div class="text-demo" id="textDropIn-demo" data-effect="textDropIn, duration=1.5s">Dropping Letters Effect
+            </div>
           </div>
           <div class="demo-info">
             <h3>textDropIn <span style="color: var(--text-light); font-size: 0.8rem;">RAF</span></h3>
@@ -819,7 +854,8 @@
               &lt;div data-effect="textDropIn, duration=1.5s"&gt;Text content...&lt;/div&gt;
             </div>
             <div class="demo-controls">
-              <button class="secondary" onclick="Effects.reset(document.getElementById('textDropIn-demo'))">Reset</button>
+              <button class="secondary"
+                onclick="Effects.reset(document.getElementById('textDropIn-demo'))">Reset</button>
               <button onclick="Effects.play(document.getElementById('textDropIn-demo'))">Play</button>
             </div>
           </div>
@@ -828,7 +864,8 @@
         <!-- Text Zoom Rotate -->
         <div class="demo-card">
           <div class="demo-content">
-            <div class="text-demo" id="textZoomRotate-demo" data-effect="textZoomRotate, duration=1.8s">Zoom Rotate Text</div>
+            <div class="text-demo" id="textZoomRotate-demo" data-effect="textZoomRotate, duration=1.8s">Zoom Rotate Text
+            </div>
           </div>
           <div class="demo-info">
             <h3>textZoomRotate <span style="color: var(--text-light); font-size: 0.8rem;">RAF</span></h3>
@@ -837,7 +874,8 @@
               &lt;div data-effect="textZoomRotate, duration=1.8s"&gt;Text content...&lt;/div&gt;
             </div>
             <div class="demo-controls">
-              <button class="secondary" onclick="Effects.reset(document.getElementById('textZoomRotate-demo'))">Reset</button>
+              <button class="secondary"
+                onclick="Effects.reset(document.getElementById('textZoomRotate-demo'))">Reset</button>
               <button onclick="Effects.play(document.getElementById('textZoomRotate-demo'))">Play</button>
             </div>
           </div>
@@ -846,7 +884,8 @@
         <!-- Text Slow Reveal -->
         <div class="demo-card">
           <div class="demo-content">
-            <div class="text-demo" id="textSlowReveal-demo" data-effect="textSlowReveal, duration=3s">Dramatic Slow Reveal</div>
+            <div class="text-demo" id="textSlowReveal-demo" data-effect="textSlowReveal, duration=3s">Dramatic Slow
+              Reveal</div>
           </div>
           <div class="demo-info">
             <h3>textSlowReveal <span style="color: var(--text-light); font-size: 0.8rem;">RAF</span></h3>
@@ -855,7 +894,8 @@
               &lt;div data-effect="textSlowReveal, duration=3s"&gt;Text content...&lt;/div&gt;
             </div>
             <div class="demo-controls">
-              <button class="secondary" onclick="Effects.reset(document.getElementById('textSlowReveal-demo'))">Reset</button>
+              <button class="secondary"
+                onclick="Effects.reset(document.getElementById('textSlowReveal-demo'))">Reset</button>
               <button onclick="Effects.play(document.getElementById('textSlowReveal-demo'))">Play</button>
             </div>
           </div>
@@ -864,7 +904,8 @@
         <!-- Text Blur Appear -->
         <div class="demo-card">
           <div class="demo-content">
-            <div class="text-demo" id="textBlurAppear-demo" data-effect="textBlurAppear, duration=2s">Smooth Blur to Clear</div>
+            <div class="text-demo" id="textBlurAppear-demo" data-effect="textBlurAppear, duration=2s">Smooth Blur to
+              Clear</div>
           </div>
           <div class="demo-info">
             <h3>textBlurAppear <span style="color: var(--text-light); font-size: 0.8rem;">RAF</span></h3>
@@ -873,7 +914,8 @@
               &lt;div data-effect="textBlurAppear, duration=2s"&gt;Text content...&lt;/div&gt;
             </div>
             <div class="demo-controls">
-              <button class="secondary" onclick="Effects.reset(document.getElementById('textBlurAppear-demo'))">Reset</button>
+              <button class="secondary"
+                onclick="Effects.reset(document.getElementById('textBlurAppear-demo'))">Reset</button>
               <button onclick="Effects.play(document.getElementById('textBlurAppear-demo'))">Play</button>
             </div>
           </div>
@@ -887,9 +929,9 @@
         <div class="demo-card">
           <div class="demo-content">
             <svg class="svg-demo" id="svgDraw-demo" data-effect="svgDraw, duration=3s" viewBox="0 0 200 100">
-              <path d="M10,50 Q50,10 100,50 T190,50" fill="none" stroke-width="3"/>
-              <circle cx="50" cy="30" r="8" fill="none" stroke-width="2"/>
-              <rect x="120" y="20" width="30" height="20" fill="none" stroke-width="2"/>
+              <path d="M10,50 Q50,10 100,50 T190,50" fill="none" stroke-width="3" />
+              <circle cx="50" cy="30" r="8" fill="none" stroke-width="2" />
+              <rect x="120" y="20" width="30" height="20" fill="none" stroke-width="2" />
             </svg>
           </div>
           <div class="demo-info">
@@ -897,7 +939,7 @@
             <p>Progressively draws SVG paths, circles, and shapes.</p>
             <div class="code-snippet">
               &lt;svg data-effect="svgDraw, duration=3s"&gt;
-                &lt;path d="..." /&gt;
+              &lt;path d="..." /&gt;
               &lt;/svg&gt;
             </div>
             <div class="demo-controls">
@@ -915,14 +957,15 @@
         <!-- 3D Tilt Card -->
         <div class="demo-card">
           <div class="demo-content">
-            <div class="card-3d" id="tiltCard-demo" data-effect="tiltCard, duration=1s" data-tilt-amount="15">3D Tilt Card<br><small>Hover to tilt!</small></div>
+            <div class="card-3d" id="tiltCard-demo" data-effect="tiltCard, duration=1s" data-tilt-amount="15">3D Tilt
+              Card<br><small>Hover to tilt!</small></div>
           </div>
           <div class="demo-info">
             <h3>tiltCard <span style="color: var(--text-light); font-size: 0.8rem;">Interactive</span></h3>
             <p>Card tilts in 3D based on mouse position when hovered.</p>
             <div class="code-snippet">
-              &lt;div data-effect="tiltCard, duration=1s" 
-                  data-tilt-amount="15"&gt;Content...&lt;/div&gt;
+              &lt;div data-effect="tiltCard, duration=1s"
+              data-tilt-amount="15"&gt;Content...&lt;/div&gt;
             </div>
             <div class="demo-controls">
               <button class="secondary" onclick="Effects.reset(document.getElementById('tiltCard-demo'))">Reset</button>
@@ -1011,14 +1054,15 @@
         <!-- Floating -->
         <div class="demo-card">
           <div class="demo-content">
-            <div class="floating-box" id="floating-demo" data-effect="floating, duration=1s" data-float-amount="8px" data-float-duration="2.5s">Floating Element</div>
+            <div class="floating-box" id="floating-demo" data-effect="floating, duration=1s" data-float-amount="8px"
+              data-float-duration="2.5s">Floating Element</div>
           </div>
           <div class="demo-info">
             <h3>floating <span style="color: var(--text-light); font-size: 0.8rem;">Simple</span></h3>
             <p>Continuous subtle floating animation after entrance.</p>
             <div class="code-snippet">
-              &lt;div data-effect="floating, duration=1s" 
-                  data-float-amount="8px"&gt;Content...&lt;/div&gt;
+              &lt;div data-effect="floating, duration=1s"
+              data-float-amount="8px"&gt;Content...&lt;/div&gt;
             </div>
             <div class="demo-controls">
               <button class="secondary" onclick="Effects.reset(document.getElementById('floating-demo'))">Reset</button>
@@ -1030,22 +1074,28 @@
         <!-- Stagger Children -->
         <div class="demo-card">
           <div class="demo-content">
-            <div id="staggerChildren-demo" data-effect="staggerChildren, duration=1.5s" data-child-selector=".stagger-item">
-              <div class="stagger-item" style="padding: 5px; margin: 2px; background: rgba(79, 70, 229, 0.1); border-radius: 4px;">Item 1</div>
-              <div class="stagger-item" style="padding: 5px; margin: 2px; background: rgba(79, 70, 229, 0.1); border-radius: 4px;">Item 2</div>
-              <div class="stagger-item" style="padding: 5px; margin: 2px; background: rgba(79, 70, 229, 0.1); border-radius: 4px;">Item 3</div>
-              <div class="stagger-item" style="padding: 5px; margin: 2px; background: rgba(79, 70, 229, 0.1); border-radius: 4px;">Item 4</div>
+            <div id="staggerChildren-demo" data-effect="staggerChildren, duration=1.5s"
+              data-child-selector=".stagger-item">
+              <div class="stagger-item"
+                style="padding: 5px; margin: 2px; background: rgba(79, 70, 229, 0.1); border-radius: 4px;">Item 1</div>
+              <div class="stagger-item"
+                style="padding: 5px; margin: 2px; background: rgba(79, 70, 229, 0.1); border-radius: 4px;">Item 2</div>
+              <div class="stagger-item"
+                style="padding: 5px; margin: 2px; background: rgba(79, 70, 229, 0.1); border-radius: 4px;">Item 3</div>
+              <div class="stagger-item"
+                style="padding: 5px; margin: 2px; background: rgba(79, 70, 229, 0.1); border-radius: 4px;">Item 4</div>
             </div>
           </div>
           <div class="demo-info">
             <h3>staggerChildren <span style="color: var(--text-light); font-size: 0.8rem;">RAF</span></h3>
             <p>Staggered animation of child elements with customizable selectors.</p>
             <div class="code-snippet">
-              &lt;div data-effect="staggerChildren, duration=1.5s" 
-                  data-child-selector=".item"&gt;...&lt;/div&gt;
+              &lt;div data-effect="staggerChildren, duration=1.5s"
+              data-child-selector=".item"&gt;...&lt;/div&gt;
             </div>
             <div class="demo-controls">
-              <button class="secondary" onclick="Effects.reset(document.getElementById('staggerChildren-demo'))">Reset</button>
+              <button class="secondary"
+                onclick="Effects.reset(document.getElementById('staggerChildren-demo'))">Reset</button>
               <button onclick="Effects.play(document.getElementById('staggerChildren-demo'))">Play</button>
             </div>
           </div>
@@ -1054,14 +1104,15 @@
         <!-- Reveal -->
         <div class="demo-card">
           <div class="demo-content">
-            <div class="demo-item" id="reveal-demo" data-effect="reveal, duration=1.2s" data-direction="left">Directional Reveal</div>
+            <div class="demo-item" id="reveal-demo" data-effect="reveal, duration=1.2s" data-direction="left">
+              Directional Reveal</div>
           </div>
           <div class="demo-info">
             <h3>reveal <span style="color: var(--text-light); font-size: 0.8rem;">Simple</span></h3>
             <p>Directional reveal using clip-path (left, right, top, bottom).</p>
             <div class="code-snippet">
-              &lt;div data-effect="reveal, duration=1.2s" 
-                  data-direction="left"&gt;Content...&lt;/div&gt;
+              &lt;div data-effect="reveal, duration=1.2s"
+              data-direction="left"&gt;Content...&lt;/div&gt;
             </div>
             <div class="demo-controls">
               <button class="secondary" onclick="Effects.reset(document.getElementById('reveal-demo'))">Reset</button>
@@ -1100,7 +1151,8 @@
               &lt;div data-effect="liquidFade, duration=1.8s"&gt;Content...&lt;/div&gt;
             </div>
             <div class="demo-controls">
-              <button class="secondary" onclick="Effects.reset(document.getElementById('liquidFade-demo'))">Reset</button>
+              <button class="secondary"
+                onclick="Effects.reset(document.getElementById('liquidFade-demo'))">Reset</button>
               <button onclick="Effects.play(document.getElementById('liquidFade-demo'))">Play</button>
             </div>
           </div>
@@ -1136,7 +1188,8 @@
               &lt;div data-effect="smoothBounce, duration=1.5s"&gt;Content...&lt;/div&gt;
             </div>
             <div class="demo-controls">
-              <button class="secondary" onclick="Effects.reset(document.getElementById('smoothBounce-demo'))">Reset</button>
+              <button class="secondary"
+                onclick="Effects.reset(document.getElementById('smoothBounce-demo'))">Reset</button>
               <button onclick="Effects.play(document.getElementById('smoothBounce-demo'))">Play</button>
             </div>
           </div>
@@ -1145,17 +1198,19 @@
         <!-- Elastic Slide -->
         <div class="demo-card">
           <div class="demo-content">
-            <div class="demo-item" id="elasticSlide-demo" data-effect="elasticSlide, duration=1.5s" data-slide-direction="left">Elastic Slide</div>
+            <div class="demo-item" id="elasticSlide-demo" data-effect="elasticSlide, duration=1.5s"
+              data-slide-direction="left">Elastic Slide</div>
           </div>
           <div class="demo-info">
             <h3>elasticSlide <span style="color: var(--text-light); font-size: 0.8rem;">RAF</span></h3>
             <p>Elastic slide with smooth overshoot in any direction.</p>
             <div class="code-snippet">
-              &lt;div data-effect="elasticSlide, duration=1.5s" 
-                  data-slide-direction="left"&gt;Content...&lt;/div&gt;
+              &lt;div data-effect="elasticSlide, duration=1.5s"
+              data-slide-direction="left"&gt;Content...&lt;/div&gt;
             </div>
             <div class="demo-controls">
-              <button class="secondary" onclick="Effects.reset(document.getElementById('elasticSlide-demo'))">Reset</button>
+              <button class="secondary"
+                onclick="Effects.reset(document.getElementById('elasticSlide-demo'))">Reset</button>
               <button onclick="Effects.play(document.getElementById('elasticSlide-demo'))">Play</button>
             </div>
           </div>
@@ -1173,7 +1228,8 @@
               &lt;div data-effect="smoothReveal, duration=1.8s"&gt;Content...&lt;/div&gt;
             </div>
             <div class="demo-controls">
-              <button class="secondary" onclick="Effects.reset(document.getElementById('smoothReveal-demo'))">Reset</button>
+              <button class="secondary"
+                onclick="Effects.reset(document.getElementById('smoothReveal-demo'))">Reset</button>
               <button onclick="Effects.play(document.getElementById('smoothReveal-demo'))">Play</button>
             </div>
           </div>
@@ -1219,22 +1275,23 @@
 
     <section id="replay-all" class="section" style="text-align: center; padding: 40px 0;">
       <h2 data-effect="fadeIn">Want to see all animations again?</h2>
-      <p style="margin-bottom: 20px;" data-effect="fadeIn, delay=0.2s">Click the button below to reset and replay all animations on this page.</p>
-      <button style="padding: 12px 24px; font-size: 1.1rem;" onclick="Effects.replayAll()">Replay All Animations</button>
+      <p style="margin-bottom: 20px;" data-effect="fadeIn, delay=0.2s">Click the button below to reset and replay all
+        animations on this page.</p>
+      <button style="padding: 12px 24px; font-size: 1.1rem;" onclick="Effects.replayAll()">Replay All
+        Animations</button>
     </section>
   </main>
 
   <footer>
     <div class="container">
       <p>Effects System Demo - A lightweight animation library for web applications</p>
-      <p>Created by <a href="https://nichind.dev">nichind</a> | <a href="https://github.com/nichind/effects">GitHub Repository</a></p>
+      <p>Created by <a href="https://nichind.dev">nichind</a> | <a href="https://github.com/nichind/effects">GitHub
+          Repository</a></p>
     </div>
   </footer>
-
-  <script src="https://raw.githubusercontent.com/nichind/effects/refs/heads/main/effects.js"></script>
   <script>
     // Initialize effects system
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
       // Set up navigation
       function scrollToSection(sectionId) {
         const section = document.getElementById(sectionId);
@@ -1243,24 +1300,24 @@
             top: section.offsetTop - 70,
             behavior: 'smooth'
           });
-          
+
           // Update active nav item
           document.querySelectorAll('.nav-item').forEach(item => {
             item.classList.remove('active');
           });
-          
+
           event.target.classList.add('active');
         }
       }
-      
+
       // Make scrollToSection available globally
       window.scrollToSection = scrollToSection;
-      
+
       // Handle navigation highlight on scroll
-      window.addEventListener('scroll', function() {
+      window.addEventListener('scroll', function () {
         const sections = ['basic-effects', 'text-effects', 'svg-effects', 'interactive-effects', 'advanced-effects'];
         let currentSection = '';
-        
+
         for (let i = 0; i < sections.length; i++) {
           const sectionId = sections[i];
           const section = document.getElementById(sectionId);
@@ -1268,12 +1325,12 @@
             currentSection = sections[i];
           }
         }
-        
+
         if (currentSection) {
           document.querySelectorAll('.nav-item').forEach(item => {
             item.classList.remove('active');
           });
-          
+
           const activeNav = document.querySelector(`[onclick="scrollToSection('${currentSection}')"]`);
           if (activeNav) {
             activeNav.classList.add('active');
@@ -1283,4 +1340,5 @@
     });
   </script>
 </body>
+
 </html>
