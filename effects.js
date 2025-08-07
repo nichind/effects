@@ -3,7 +3,7 @@
  * A lightweight, high-performance animation library for web applications
  * Triggers animations based on element visibility and user interaction
  * 
- * @version 0.2
+ * @version 0.3
  * @license MIT
  * @author nichind
  */
@@ -1366,53 +1366,170 @@ class EffectsSystem {
       }
     });
 
-    // 3D Card effect - tilts element based on mouse position
+    // 3D Card effect - tilts element based on mouse position within radius
     this.registerEffect('tiltCard', {
-      description: '3D tilt effect on mouse hover',
+      description: '3D tilt effect based on mouse proximity',
       initialState: (element) => {
         element.style.opacity = '0';
         element.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
         element.style.transformStyle = 'preserve-3d';
         element.style.transition = 'transform 0.1s ease-out';
         
-        // Store mouse handlers to be able to remove them later
-        const mouseEnter = () => {
-          element.dataset.tiltActive = 'true';
+        // Get tilt radius from data attribute or use default
+        const tiltRadius = parseInt(element.dataset.tiltRadius || '50');
+        const tiltAmount = parseInt(element.dataset.tiltAmount || '6');
+        
+        // Create global mouse tracking if it doesn't exist
+        if (!window._globalMouseTracker) {
+          window._globalMouseTracker = {
+            x: 0,
+            y: 0,
+            elements: new Set(),
+            isTracking: false
+          };
+          
+          const updateMousePosition = (e) => {
+            window._globalMouseTracker.x = e.clientX;
+            window._globalMouseTracker.y = e.clientY;
+            
+            // Check all tracked elements for proximity
+            window._globalMouseTracker.elements.forEach(trackedElement => {
+              if (!trackedElement.isConnected) {
+                window._globalMouseTracker.elements.delete(trackedElement);
+                return;
+              }
+              
+              const rect = trackedElement.getBoundingClientRect();
+              
+              // Calculate distance from mouse to nearest edge of element
+              const mouseX = e.clientX;
+              const mouseY = e.clientY;
+              
+              // Calculate closest point on the element's rectangle to the mouse
+              const closestX = Math.max(rect.left, Math.min(mouseX, rect.right));
+              const closestY = Math.max(rect.top, Math.min(mouseY, rect.bottom));
+              
+              // Calculate distance from mouse to closest point
+              const dx = mouseX - closestX;
+              const dy = mouseY - closestY;
+              const distanceToEdge = Math.sqrt(dx * dx + dy * dy);
+              
+              const elementRadius = parseInt(trackedElement.dataset.tiltRadius || '50');
+              const elementTiltAmount = parseInt(trackedElement.dataset.tiltAmount || '6');
+              
+              if (distanceToEdge <= elementRadius) {
+                // Mouse is within tilt radius
+                trackedElement.dataset.tiltActive = 'true';
+                
+                // Calculate tilt based on mouse position relative to element center
+                const relativeX = e.clientX - rect.left;
+                const relativeY = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                // Calculate intensity based on distance to edge (closer = stronger effect)
+                const intensity = Math.max(0, 1 - (distanceToEdge / elementRadius));
+                
+                const rotateY = ((relativeX - centerX) / centerX) * elementTiltAmount * intensity;
+                const rotateX = -((relativeY - centerY) / centerY) * elementTiltAmount * intensity;
+                
+                trackedElement.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+              } else {
+                // Mouse is outside tilt radius
+                if (trackedElement.dataset.tiltActive === 'true') {
+                  trackedElement.dataset.tiltActive = 'false';
+                  trackedElement.style.transition = 'transform 0.4s cubic-bezier(0.23, 1, 0.32, 1)';
+                  trackedElement.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
+                  
+                  // Reset transition after animation
+                  setTimeout(() => {
+                    if (trackedElement.isConnected) {
+                      trackedElement.style.transition = 'transform 0.1s ease-out';
+                    }
+                  }, 400);
+                }
+              }
+            });
+          };
+          
+          // Start global mouse tracking
+          document.addEventListener('mousemove', updateMousePosition, { passive: true });
+          window._globalMouseTracker.isTracking = true;
+        }
+        
+        // Add this element to tracking set
+        window._globalMouseTracker.elements.add(element);
+        
+        // Store cleanup function
+        element._tiltCleanup = () => {
+          if (window._globalMouseTracker) {
+            window._globalMouseTracker.elements.delete(element);
+          }
         };
         
-        const mouseLeave = () => {
-          element.dataset.tiltActive = 'false';
-          element.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
-        };
-        
-        const mouseMove = (e) => {
-          if (element.dataset.tiltActive !== 'true') return;
+        // Add visual debugging if debug mode is enabled
+        if (this.config.debug) {
+          const debugOverlay = document.createElement('div');
+          debugOverlay.style.position = 'fixed';
+          debugOverlay.style.border = '2px dashed rgba(255, 0, 0, 0.3)';
+          debugOverlay.style.pointerEvents = 'none';
+          debugOverlay.style.zIndex = '9999';
+          debugOverlay.style.display = 'none';
+          debugOverlay.className = 'tilt-debug-overlay';
           
-          const rect = element.getBoundingClientRect();
-          const x = e.clientX - rect.left;
-          const y = e.clientY - rect.top;
+          document.body.appendChild(debugOverlay);
           
-          // Calculate rotation (center is 0,0)
-          const tiltAmount = element.dataset.tiltAmount || '10';
-          const centerX = rect.width / 2;
-          const centerY = rect.height / 2;
+          element._debugOverlay = debugOverlay;
           
-          const rotateY = ((x - centerX) / centerX) * parseInt(tiltAmount);
-          const rotateX = -((y - centerY) / centerY) * parseInt(tiltAmount);
+          // Update debug overlay to show radius around element
+          const updateDebugOverlay = () => {
+            if (!element.isConnected) return;
+            
+            const rect = element.getBoundingClientRect();
+            const radius = tiltRadius;
+            
+            // Create a rectangle that encompasses the element + radius
+            const left = rect.left - radius;
+            const top = rect.top - radius;
+            const width = rect.width + (radius * 2);
+            const height = rect.height + (radius * 2);
+            
+            debugOverlay.style.left = `${left}px`;
+            debugOverlay.style.top = `${top}px`;
+            debugOverlay.style.width = `${width}px`;
+            debugOverlay.style.height = `${height}px`;
+            debugOverlay.style.borderRadius = `${radius}px`;
+            debugOverlay.style.display = 'block';
+          };
           
-          element.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-        };
-        
-        element.addEventListener('mouseenter', mouseEnter);
-        element.addEventListener('mouseleave', mouseLeave);
-        element.addEventListener('mousemove', mouseMove);
-        
-        // Store handlers to remove them if needed
-        element._tiltHandlers = {
-          mouseEnter,
-          mouseLeave,
-          mouseMove
-        };
+          // Show debug overlay on element hover
+          element.addEventListener('mouseenter', () => {
+            updateDebugOverlay();
+          });
+          
+          element.addEventListener('mouseleave', () => {
+            debugOverlay.style.display = 'none';
+          });
+          
+          // Update position on scroll/resize
+          const updateDebugPosition = () => {
+            if (debugOverlay.style.display !== 'none') {
+              updateDebugOverlay();
+            }
+          };
+          
+          window.addEventListener('scroll', updateDebugPosition, { passive: true });
+          window.addEventListener('resize', updateDebugPosition, { passive: true });
+          
+          element._debugCleanup = () => {
+            if (debugOverlay && debugOverlay.parentNode) {
+              debugOverlay.parentNode.removeChild(debugOverlay);
+            }
+            window.removeEventListener('scroll', updateDebugPosition);
+            window.removeEventListener('resize', updateDebugPosition);
+          };
+        }
       },
       animate: (element, { duration, delay, easing }) => {
         element.style.transition = `opacity ${duration} ${easing} ${delay}`;
@@ -1923,6 +2040,7 @@ class EffectsSystem {
           style.id = 'breathe-keyframes';
           style.textContent = `
             @keyframes breathe {
+
               0%, 100% { transform: scale(1); }
               50% { transform: scale(1.05); }
             }
@@ -2732,28 +2850,28 @@ class EffectsSystem {
         }).join('');
       },
       animate: (element, { duration, delay }, progress) => {
-        const letters = element.querySelectorAll('.blur-appear-letter');
+        const words = element.querySelectorAll('.blur-appear-letter');
         const durationMs = this._convertTimeToMs(duration);
         const delayMs = this._convertTimeToMs(delay);
         const staggerMs = 80;
         
-        const totalDuration = delayMs + durationMs + ((letters.length - 1) * staggerMs);
+        const totalDuration = delayMs + durationMs + ((words.length - 1) * staggerMs);
         
         // Smooth ease-out cubic for natural motion
         const easeOutCubic = t => 1 - Math.pow(1 - t, 3);
         
-        let allLettersComplete = true;
+        let allWordsComplete = true;
         
-        letters.forEach((letter, index) => {
-          const letterDelay = delayMs + (index * staggerMs);
-          const letterProgress = Math.max(0, Math.min(1, (progress * totalDuration - letterDelay) / durationMs));
+        words.forEach((word, index) => {
+          const wordDelay = delayMs + (index * staggerMs);
+          const wordProgress = Math.max(0, Math.min(1, (progress * totalDuration - wordDelay) / durationMs));
           
-          if (letterProgress < 1) {
-            allLettersComplete = false;
+          if (wordProgress < 1) {
+            allWordsComplete = false;
           }
           
-          if (letterProgress > 0) {
-            const eased = easeOutCubic(letterProgress);
+          if (wordProgress > 0) {
+            const eased = easeOutCubic(wordProgress);
             
             // Animate blur from 12px to 0px
             const blurAmount = 12 * (1 - eased);
@@ -2765,13 +2883,13 @@ class EffectsSystem {
             const translateY = 15 * (1 - eased);
             
             // Apply all transforms
-            letter.style.filter = `blur(${blurAmount}px)`;
-            letter.style.transform = `translateY(${translateY}px) scale(${scale})`;
-            letter.style.opacity = eased.toString();
+            word.style.filter = `blur(${blurAmount}px)`;
+            word.style.transform = `translateY(${translateY}px) scale(${scale})`;
+            word.style.opacity = eased.toString();
           }
         });
         
-        return allLettersComplete;
+        return allWordsComplete;
       }
     });
   }
@@ -3512,6 +3630,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initialize with default options
   Effects.init();
 });
+
 
 // Export for use in other files
 window.Effects = Effects;
