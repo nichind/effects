@@ -3,7 +3,7 @@
  * A lightweight, high-performance animation library for web applications
  * Triggers animations based on element visibility and user interaction
  * 
- * @version 0.3
+ * @version 0.3.1
  * @license MIT
  * @author nichind
  */
@@ -22,7 +22,7 @@ class EffectsSystem {
       threshold: 0.2,                 // How much of element needs to be visible
       rootMargin: '0px',              // Margin around root element
       once: true,                     // Only animate once by default
-      animationQuality: 'high',       // Animation quality (high, medium, low)
+      animationQuality: 'medium',       // Animation quality (high, medium, low)
       debug: false,                   // Debug mode for logging
       useClasses: true,               // Use CSS classes instead of inline styles when possible
       defaultDuration: '0.5s',        // Default animation duration
@@ -414,7 +414,7 @@ class EffectsSystem {
       
       // Reset and replay all animations on window resize
       // Can be optimized to only handle affected elements
-      this.replayAll();
+      // this.replayAll();
     }, 250);
     
     window.addEventListener('resize', this._boundResizeHandler);
@@ -634,7 +634,7 @@ class EffectsSystem {
               momentum = Math.sin(momentumProgress * Math.PI) * 2;
             }
             
-            word.style.transform = `translateY(${translateY - momentum}px) scale(${scale}) rotateX(${rotateX}deg)`;
+            word.style.transform = `translateY(${translateY}px) scale(${scale}) rotateX(${rotateX}deg)`;
             word.style.opacity = opacityEased.toString();
             word.style.filter = `blur(${blur}px)`;
           }
@@ -1373,8 +1373,8 @@ class EffectsSystem {
         element.style.opacity = '0';
         element.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
         element.style.transformStyle = 'preserve-3d';
-        element.style.transition = 'transform 0.1s ease-out';
-        
+        element.style.transition = 'all 0.2s ease-out';
+
         // Get tilt radius from data attribute or use default
         const tiltRadius = parseInt(element.dataset.tiltRadius || '50');
         const tiltAmount = parseInt(element.dataset.tiltAmount || '6');
@@ -1439,13 +1439,13 @@ class EffectsSystem {
                 // Mouse is outside tilt radius
                 if (trackedElement.dataset.tiltActive === 'true') {
                   trackedElement.dataset.tiltActive = 'false';
-                  trackedElement.style.transition = 'transform 0.4s cubic-bezier(0.23, 1, 0.32, 1)';
+                  trackedElement.style.transition = 'all 0.4s cubic-bezier(0.23, 1, 0.32, 1)';
                   trackedElement.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
                   
                   // Reset transition after animation
                   setTimeout(() => {
                     if (trackedElement.isConnected) {
-                      trackedElement.style.transition = 'transform 0.1s ease-out';
+                      trackedElement.style.transition = 'transform 0.1s ease-out, all 0.2s ease-out';
                     }
                   }, 400);
                 }
@@ -1778,7 +1778,7 @@ class EffectsSystem {
         
         let allLettersComplete = true;
         
-        letters.forEach((letter, index) => {
+      letters.forEach((letter, index) => {
           const letterDelay = delayMs + (index * staggerMs);
           const letterProgress = Math.max(0, Math.min(1, (progress * totalDuration - letterDelay) / durationMs));
           
